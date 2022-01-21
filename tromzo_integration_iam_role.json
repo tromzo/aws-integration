@@ -1,0 +1,70 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "CloudFormation Template for Tromzo AWS Integration IAM",
+  "Metadata": {
+    "AWS::CloudFormation::Interface": {
+      "ParameterGroups": [
+        {
+          "Label": {
+            "default": "Tromzo Authentication Parameters"
+          },
+          "Parameters": ["TromzoAccountId", "TromzoExternalId"]
+        }
+      ]
+    }
+  },
+  "Parameters": {
+    "TromzoAccountId": {
+      "Description": "The Tromzo AWS account ID",
+      "Type": "String"
+    },
+    "TromzoExternalId": {
+      "Description": "The Tromzo External ID you were given",
+      "Type": "String"
+    }
+  },
+  "Resources": {
+    "TromzoSecurityAuditRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "RoleName": "TromzoSecurityAuditRole",
+        "ManagedPolicyArns": [
+          "arn:aws:iam::aws:policy/SecurityAudit",
+          "arn:aws:iam::aws:policy/AmazonInspector2ReadOnlyAccess"
+        ],
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": {
+                  "Fn::Join": [
+                    "",
+                    ["arn:aws:iam::", { "Ref": "TromzoAccountId" }, ":user/tromzo-security-audit-user"]
+                  ]
+                }
+              },
+              "Condition": {
+                "StringEquals": {
+                   "sts:ExternalId": {
+                     "Ref": "TromzoExternalId"
+                   }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "RoleARN": {
+      "Description": "ARN of the TromzoSecurityAuditRole role",
+      "Value": {
+        "Fn::GetAtt": ["TromzoSecurityAuditRole", "Arn"]
+      }
+    }
+  }
+}
