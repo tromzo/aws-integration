@@ -26,6 +26,7 @@
   "Resources": {
     "TromzoSecurityAuditRole": {
       "Type": "AWS::IAM::Role",
+      "DeletionPolicy" : "Retain",
       "Properties": {
         "RoleName": "TromzoSecurityAuditRole",
         "ManagedPolicyArns": [
