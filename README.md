@@ -22,6 +22,7 @@ CloudFormation template to set up the AWS integration.
        ParameterKey=TromzoAccountId,ParameterValue=$TROMZO_ACCOUNT_ID \
        ParameterKey=TromzoExternalId,ParameterValue=$TROMZO_EXTERNAL_ID
    ```
+   If this is done in the CloudFormation web console, then remove the Outputs object entirely from the previously downloaded https://github.com/tromzo/aws-integration/blob/main/tromzo_integration_iam_role.json file.
 
 4. Verify that the stack has completed successfully and then run the following command:
 
