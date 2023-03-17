@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "CloudFormation Template for Tromzo AWS Integration IAM",
+  "Description": "CloudFormation Template for Tromzo AWS Integration",
   "Metadata": {
     "AWS::CloudFormation::Interface": {
       "ParameterGroups": [
@@ -26,7 +26,6 @@
   "Resources": {
     "TromzoSecurityAuditRole": {
       "Type": "AWS::IAM::Role",
-      "DeletionPolicy" : "Retain",
       "Properties": {
         "RoleName": "TromzoSecurityAuditRole",
         "ManagedPolicyArns": [
