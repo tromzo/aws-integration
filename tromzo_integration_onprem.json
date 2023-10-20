@@ -1,0 +1,66 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "CloudFormation Template for Tromzo AWS Integration",
+  "Resources": {
+    "SecurityAuditUser": {
+      "Type": "AWS::IAM::User",
+      "Properties": {
+        "UserName": "tromzo-security-audit-user",
+        "Policies": [
+          {
+            "PolicyName": "AssumeSecurityAuditRole",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": "sts:AssumeRole",
+                  "Resource": {
+                    "Fn::Sub": "arn:aws:iam::${AWS::AccountId}:role/TromzoSecurityAuditRole"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "TromzoSecurityAuditRole": {
+      "Type": "AWS::IAM::Role",
+      "DependsOn": "SecurityAuditUser",
+      "Properties": {
+        "RoleName": "TromzoSecurityAuditRole",
+        "ManagedPolicyArns": [
+          "arn:aws:iam::aws:policy/SecurityAudit",
+          "arn:aws:iam::aws:policy/AmazonInspector2ReadOnlyAccess"
+        ],
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": {
+                  "Fn::Join": [
+                    "",
+                    ["arn:aws:iam::", { "Ref": "AWS::AccountId" }, ":user/tromzo-security-audit-user"]
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "RoleARN": {
+      "Description": "ARN of the TromzoSecurityAuditRole role",
+      "Value": {
+        "Fn::GetAtt": ["TromzoSecurityAuditRole", "Arn"]
+      }
+    }
+  }
+}
+

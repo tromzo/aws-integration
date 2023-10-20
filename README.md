@@ -116,3 +116,36 @@ accounts.
 
 To complete the integration, provide the output of the 
 `list-stack-set-operation-results` command from step 5 to us.
+
+## Steps to configure the AWS integration in On-Prem
+
+1. Download the CloudFormation JSON from the following link
+   https://github.com/TromsoSecurity/tromzo-aws-integration/raw/main/tromzo_integration_onprem.json.
+
+2. Execute the following script:
+
+   ```sh
+   aws cloudformation create-stack \
+       --stack-name tromzo-iam-integration \
+       --capabilities CAPABILITY_NAMED_IAM \
+       --template-body file://tromzo_integration_onprem.json
+   ```
+3. Verify that the stack creation has completed successfully by running the following
+   command:
+
+   ```sh
+   aws iam get-role --role-name TromzoSecurityAuditRole
+   ```
+   
+   The output will contain the role ARN, which you'll need later to configure the integration in Tromzo.
+   It looks like this: `arn:aws:iam::<YOUR_ACCOUNT_ID>:role/TromzoSecurityAuditRole`.
+
+4. Create access keys for the security audit user:
+
+   ```sh
+   aws iam create-access-key --user-name tromzo-security-audit-user
+   ```
+   The output will contain `AccessKeyId` and `SecretAccessKey`, which are also needed to configure the integration.
+
+After completing the steps above, you can create an integration in the app by specifying Role ARN, Access Key Id, 
+and Secret Access Key in the appropriate fields in Tromzo UI.
