@@ -7,7 +7,7 @@ CloudFormation template to set up the AWS integration.
 1. Ask the Tromzo team to generate an External ID.
 
 2. Download the CloudFormation JSON from the following link
-   https://github.com/TromsoSecurity/tromzo-aws-integration/raw/main/tromzo_integration_iam_role.json.
+   https://github.com/tromzo/aws-integration/blob/main/tromzo_integration_iam_role.json
 
 3. Put the Tromzo Account ID and External ID into the following script and
    execute it:
@@ -120,7 +120,7 @@ To complete the integration, provide the output of the
 ## Steps to configure the AWS integration in On-Prem
 
 1. Download the CloudFormation JSON from the following link
-   https://github.com/TromsoSecurity/tromzo-aws-integration/raw/main/tromzo_integration_onprem.json.
+   https://github.com/tromzo/aws-integration/blob/main/tromzo_integration_onprem.json 
 
 2. Execute the following script:
 
