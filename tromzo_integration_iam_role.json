@@ -30,7 +30,8 @@
         "RoleName": "TromzoSecurityAuditRole",
         "ManagedPolicyArns": [
           "arn:aws:iam::aws:policy/SecurityAudit",
-          "arn:aws:iam::aws:policy/AmazonInspector2ReadOnlyAccess"
+          "arn:aws:iam::aws:policy/AmazonInspector2ReadOnlyAccess",
+          "arn:aws:iam::aws:policy/AWSOrganizationsReadOnlyAccess"
         ],
         "AssumeRolePolicyDocument": {
           "Version": "2012-10-17",
