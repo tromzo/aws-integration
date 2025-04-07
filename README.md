@@ -30,6 +30,20 @@ CloudFormation template to set up the AWS integration.
    ```sh
    aws iam get-role --role-name TromzoSecurityAuditRole
    ```
+   
+5. Use the following command to update the stack when it is needed:
+
+   ```
+   TROMZO_ACCOUNT_ID=<TROMZO_ACCOUNT_ID>
+   TROMZO_EXTERNAL_ID=<EXTERNAL_ID_FROM_TROMZO>
+   aws cloudformation update-stack \
+       --stack-name tromzo-iam-integration \
+       --capabilities CAPABILITY_NAMED_IAM \
+       --template-body file://tromzo_integration_iam_role.json \
+       --parameters \
+       ParameterKey=TromzoAccountId,ParameterValue=$TROMZO_ACCOUNT_ID \
+       ParameterKey=TromzoExternalId,ParameterValue=$TROMZO_EXTERNAL_ID
+   ```
 
 To complete the integration, provide the following pieces of information to us:
 
